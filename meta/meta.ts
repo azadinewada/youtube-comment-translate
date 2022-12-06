@@ -2,7 +2,7 @@ export default
 `// ==UserScript==
 // @name          YouTube评论翻译按钮
 // @namespace     https://github.com/linkwanggo
-// @version       0.1.0
+// @version       0.1.2
 // @description   在YouTube的评论上添加一个翻译按钮 (￣y▽,￣)╭ 
 // @author        linkwanggo
 // @copyright     2022, linkwanggo (https://github.com/linkwanggo)
@@ -13,6 +13,10 @@ export default
 // @compatible    chrome
 // @compatible    firefox
 // @grant         none
+// @source        https://github.com/linkwanggo/youtube-comment-translate
+// @supportURL    https://github.com/linkwanggo/youtube-comment-translate/issues
+// @downloadURL   https://greasyfork.org/scripts/456108-youtube%E8%AF%84%E8%AE%BA%E7%BF%BB%E8%AF%91%E6%8C%89%E9%92%AE/code/YouTube%E8%AF%84%E8%AE%BA%E7%BF%BB%E8%AF%91%E6%8C%89%E9%92%AE.user.js
+// @updateURL     https://greasyfork.org/scripts/456108-youtube%E8%AF%84%E8%AE%BA%E7%BF%BB%E8%AF%91%E6%8C%89%E9%92%AE/code/YouTube%E8%AF%84%E8%AE%BA%E7%BF%BB%E8%AF%91%E6%8C%89%E9%92%AE.user.js
 // ==/UserScript==
 /* globals $ waitForKeyElements */
 // @[ You can find all source codes in GitHub repo ]
