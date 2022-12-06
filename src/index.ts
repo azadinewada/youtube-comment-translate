@@ -5,9 +5,16 @@ const contentsObserver = new MutationObserver(function (mutations, observer) {
   mutations.forEach(mutation => {
     mutation.addedNodes.forEach(node => {
       if (node instanceof Element) {
-        const btn = new TranslateBtn().getBtn()
         const toolbar = node.querySelector('#toolbar')
-        toolbar?.appendChild(btn)
+        let btn
+        if (toolbar) {
+          // 如果已添加按钮，节点变化时不再重复添加
+          btn = toolbar.querySelector('div[name="translate_btn"]')
+          if (!btn) {
+            btn = new TranslateBtn().getBtn()
+            toolbar.appendChild(btn)
+          }
+        }
       }
     })
   })
@@ -16,7 +23,7 @@ const commentsObserver = new MutationObserver(function (mutations, observer) {
   mutations.forEach(mutation => {
     mutation.addedNodes.forEach(node => {
       if (node instanceof Element) {
-        const contents = (node as Element).querySelector('#contents')
+        const contents = node.querySelector('#contents')
         if (contents) {
           contentsObserver.observe(contents, options)
         }
@@ -29,7 +36,7 @@ const observer = new MutationObserver(function (mutations, observer) {
     // 此时mutation就是一个MutationRecord对象
     mutation.addedNodes.forEach(node => {
       if (node instanceof Element) {
-        const comments = (node as Element).querySelector('#comments')
+        const comments = node.querySelector('#comments')
         if (comments) {
           commentsObserver.observe(comments, options)
         }

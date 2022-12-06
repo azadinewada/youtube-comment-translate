@@ -1,18 +1,5 @@
-## 关于Youtube上增加翻译按钮的实验
+# YouTube评论翻译按钮
+## 介绍
+功能就像标题讲的一样，给YouTube的评论上添加一个翻译按钮，就像这样👇
 
-### 1.翻译
-
-```javascript
-let toolbar = [...document.querySelectorAll('#toolbar')]
-let a = document.createElement('div')
-a.textContent = '翻译' 
-toolbar[1].appendChild(a) 
-//测试成功
-a.addEventListener('click', () => alert('click')) 
-```
-
-- 需要解决的问题
-  1. 监听新的评论内容被加载
-
-### 2.原文
-
+![介绍](https://user-images.githubusercontent.com/40789514/205851221-315e5e94-149f-4ae0-bd96-4a4562fb7a1f.gif)

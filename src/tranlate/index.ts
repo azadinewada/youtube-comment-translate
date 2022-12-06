@@ -1,18 +1,16 @@
-import GoogleWeb from './google/google-api'
-import googleLanguage from './google/language'
+import { googleWeb } from './google/api'
+import { googleLanguage } from './google/language'
 import { Translate } from '../types'
-
-const googleWeb = new GoogleWeb()
 
 type ApiItem = {
   api: Translate
   language: any
 }
 
-type keys = 'google'
-type Api = { [k in keys]: ApiItem }
+type keys = 'google' // 定义所有Api的类型
+type Apis = { [k in keys]: ApiItem }
 
-const apis: Api = {
+const apis: Apis = {
   google: {
     api: googleWeb,
     language: googleLanguage,

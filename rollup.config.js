@@ -14,11 +14,12 @@ const __dirname = path.dirname(__filename)
 export default {
   input: './src/index.ts',
   output: {
-    file: isDev()
-      ? path.resolve(__dirname, './dist/youtube-comment-translate-dev.user.js')
-      : path.resolve(__dirname, './dist/youtube-comment-translate.user.js'),
-    format: 'es',
-    banner: banner
+    file: path.resolve(
+      __dirname,
+      './dist/youtube-comment-translate' + process.env.SUFFIX + '.user.js'
+    ),
+    format: process.env.FORMAT || 'umd',
+    banner: banner,
     // sourcemap: true,
   },
 
@@ -29,7 +30,7 @@ export default {
     }),
     resolve({ jsnext: true, preferBuiltins: true, browser: true }),
     cleanup({
-      extensions: ['js', 'jsx', 'mjs', 'ts']
-    })
+      extensions: ['js', 'jsx', 'mjs', 'ts'],
+    }),
   ],
 }

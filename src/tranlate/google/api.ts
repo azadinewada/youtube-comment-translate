@@ -58,4 +58,4 @@ class GoogleWeb implements Translate {
   }
 }
 
-export default GoogleWeb
+export const googleWeb = new GoogleWeb()
