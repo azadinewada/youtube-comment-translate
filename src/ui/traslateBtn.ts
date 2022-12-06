@@ -131,6 +131,20 @@ class TranslateBtn {
     this._changeState(false, contentTextElement)
   }
 
+  /**
+   * 检查内容是否为纯文本
+   * @param contentTextElement 内容所在元素
+   * @returns isPlainText: boolean
+   */
+  private _isPlainText(contentTextElement: Element): boolean {
+    const childNodes = contentTextElement.childNodes
+    if (childNodes.length > 1) {
+      childNodes.forEach(node => {
+        if (node.nodeName != '#text') return false
+      })
+    }
+    return true
+  }
   private _addClickListener(btn: HTMLDivElement) {
     btn.addEventListener('click', (event: MouseEvent) => {
       let mainElement = this._findParentById(event.target as HTMLDivElement, 'main')
@@ -144,9 +158,7 @@ class TranslateBtn {
         return
       }
       // 标记是否为纯文本内容
-      if (contentTextElement.childNodes.length > 1) {
-        this.isPlainText = false
-      }
+      this.isPlainText = this._isPlainText(contentTextElement)
       // 判断是否已经翻译过 已翻译：还原 | 未翻译：翻译
       if (this.isTranslated) {
         this._rollback(contentTextElement)
