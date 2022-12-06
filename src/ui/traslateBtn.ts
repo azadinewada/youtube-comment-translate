@@ -139,9 +139,9 @@ class TranslateBtn {
   private _isPlainText(contentTextElement: Element): boolean {
     const childNodes = contentTextElement.childNodes
     if (childNodes.length > 1) {
-      childNodes.forEach(node => {
+      for(let node of childNodes) {
         if (node.nodeName != '#text') return false
-      })
+      }
     }
     return true
   }
