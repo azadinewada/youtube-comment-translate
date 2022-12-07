@@ -1,5 +1,5 @@
 export default `// ==UserScript==
-// @name          YouTube评论翻译按钮
+// @name          YouTube评论翻译按钮(Dev)
 // @namespace     https://github.com/linkwanggo
 // @version       0.2.0
 // @description   在YouTube的评论上添加一个翻译按钮 (￣y▽,￣)╭ 

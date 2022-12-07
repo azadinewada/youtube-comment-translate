@@ -15,6 +15,12 @@ const contentsObserver = new MutationObserver((mutations, observer) => {
             toolbar.appendChild(btn)
           }
         }
+        // 监听回复节点
+        const replies = node.querySelector('#replies')
+        const contents = replies?.querySelector('#contents')
+        if (contents) {
+          contentsObserver.observe(contents, options)
+        }
       }
     })
   })

@@ -83,7 +83,7 @@ class TranslateBtn {
           if (node instanceof HTMLElement) {
             node.style.removeProperty('visibility')
             node.style.removeProperty('position')
-          } 
+          }
         })
       }
       // 更改按钮名称
@@ -141,7 +141,7 @@ class TranslateBtn {
   private _isPlainText(contentTextElement: Element): boolean {
     const childNodes = contentTextElement.childNodes
     if (childNodes.length > 1) {
-      for(let node of childNodes) {
+      for (let node of childNodes) {
         if (node.nodeName != '#text') return false
       }
     }

@@ -4,6 +4,7 @@ import resolve from 'rollup-plugin-node-resolve'
 import ts from 'rollup-plugin-typescript2'
 import repacle from 'rollup-plugin-replace'
 import banner from './meta/meta.ts'
+import bannerDev from './meta/meta.dev.ts'
 import cleanup from 'rollup-plugin-cleanup'
 
 const isDev = () => process.env.NODE_ENV === 'development'
@@ -16,12 +17,9 @@ const suffix = process.env.SUFFIX || ''
 export default {
   input: './src/index.ts',
   output: {
-    file: path.resolve(
-      __dirname,
-      './dist/youtube-comment-translate' + suffix + '.user.js'
-    ),
+    file: path.resolve(__dirname, './dist/youtube-comment-translate' + suffix + '.user.js'),
     format: process.env.FORMAT || 'umd',
-    banner: banner,
+    banner: isDev() ? bannerDev : banner,
     // sourcemap: true,
   },
 
