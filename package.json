@@ -14,11 +14,12 @@
   "main": "dist/youtube-comment-translate.user.js",
   "type": "module",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development FORMAT=esm SUFFIX='-dev' rollup -c -w",
-    "build": "cross-env NODE_ENV=produaction FORMAT=umd SUFFIX='-umd' rollup -c",
-    "build-dev": "cross-env NODE_ENV=produaction FORMAT=esm SUFFIX='-esm.dev' rollup -c",
+    "build-dev": "cross-env NODE_ENV=development FORMAT=esm SUFFIX='-esm.dev' rollup -c",
+    "build": "cross-env NODE_ENV=produaction FORMAT=umd rollup -c",
+    "build-prod": "cross-env NODE_ENV=produaction FORMAT=umd rollup -c",
     "build-umd": "cross-env NODE_ENV=produaction FORMAT=umd SUFFIX='-umd' rollup -c",
-    "build-esm": "cross-env NODE_ENV=produaction FORMAT=esm SUFFIX='-esm' rollup -c"
+    "build-esm": "cross-env NODE_ENV=produaction FORMAT=esm SUFFIX='-esm' rollup -c",
+    "build-iife": "cross-env NODE_ENV=produaction FORMAT=iife SUFFIX='-iife' rollup -c"
   },
   "keywords": [],
   "author": "linkwanggo",

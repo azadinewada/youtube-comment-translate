@@ -21,7 +21,7 @@ class GoogleWeb implements Translate {
     this.name = 'GoogleWeb'
   }
   async translate(params: TranslateParams) {
-    let { text, from = 'auto', to = 'zh-CN' } = params
+    const { text, from = 'auto', to = 'zh-CN' } = params
     const searchParams = new URLSearchParams()
     searchParams.append('client', 'gtx')
     searchParams.append('sl', from)
@@ -34,10 +34,10 @@ class GoogleWeb implements Translate {
     return fetch(url).then((data: any) => data.json())
   }
   transform(query: TranslateOptions, result: RawResult) {
-    let { text, to } = query
-    let { src } = result
+    const { text, to } = query
+    const { src } = result
     const realFrom = result.src || query.from!
-    let r: TranslateResult = {
+    const r: TranslateResult = {
       text: text,
       raw: result,
       link: `https://translate.google.com/?sl=${src || 'auto'}&tl=${to}&text=${encodeURIComponent(

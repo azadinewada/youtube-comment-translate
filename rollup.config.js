@@ -11,12 +11,14 @@ const isDev = () => process.env.NODE_ENV === 'development'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
+const suffix = process.env.SUFFIX || ''
+
 export default {
   input: './src/index.ts',
   output: {
     file: path.resolve(
       __dirname,
-      './dist/youtube-comment-translate' + process.env.SUFFIX + '.user.js'
+      './dist/youtube-comment-translate' + suffix + '.user.js'
     ),
     format: process.env.FORMAT || 'umd',
     banner: banner,

@@ -21,9 +21,9 @@ class TranslateBtn {
   }
 
   private _createBtn(): HTMLDivElement {
-    let div = document.createElement('div')
+    const div = document.createElement('div')
     div.setAttribute('name', 'translate_btn')
-    let button = document.createElement('button')
+    const button = document.createElement('button')
     button.textContent = '翻译'
     button.className =
       'yt-spec-button-shape-next yt-spec-button-shape-next--text yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-s'
@@ -80,8 +80,10 @@ class TranslateBtn {
         }
         // 显示所有子元素
         contentTextElement.childNodes.forEach(node => {
-          if (node instanceof HTMLElement) node.style.removeProperty('visibility')
-          if (node instanceof HTMLElement) node.style.removeProperty('position')
+          if (node instanceof HTMLElement) {
+            node.style.removeProperty('visibility')
+            node.style.removeProperty('position')
+          } 
         })
       }
       // 更改按钮名称
@@ -104,7 +106,7 @@ class TranslateBtn {
       return
     }
     // 查询翻译结果并渲染
-    let googleApi = apis.google
+    const googleApi = apis.google
     const query = {
       text: this.sourceText,
       to: googleApi.language['中文(简体)'],
@@ -147,12 +149,12 @@ class TranslateBtn {
   }
   private _addClickListener(btn: HTMLDivElement) {
     btn.addEventListener('click', (event: MouseEvent) => {
-      let mainElement = this._findParentById(event.target as HTMLDivElement, 'main')
+      const mainElement = this._findParentById(event.target as HTMLDivElement, 'main')
       if (!mainElement) {
         console.error('找不到#main元素')
         return
       }
-      let contentTextElement = mainElement.querySelector('#content-text')
+      const contentTextElement = mainElement.querySelector('#content-text')
       if (!contentTextElement) {
         console.error('找不到#content-text元素')
         return

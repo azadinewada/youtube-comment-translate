@@ -1,7 +1,7 @@
 import TranslateBtn from './ui/traslateBtn'
 
 // 监听Node变化，发生变化后 添加新的按钮
-const contentsObserver = new MutationObserver(function (mutations, observer) {
+const contentsObserver = new MutationObserver((mutations, observer) => {
   mutations.forEach(mutation => {
     mutation.addedNodes.forEach(node => {
       if (node instanceof Element) {
@@ -19,7 +19,7 @@ const contentsObserver = new MutationObserver(function (mutations, observer) {
     })
   })
 })
-const commentsObserver = new MutationObserver(function (mutations, observer) {
+const commentsObserver = new MutationObserver((mutations, observer) => {
   mutations.forEach(mutation => {
     mutation.addedNodes.forEach(node => {
       if (node instanceof Element) {
@@ -31,7 +31,7 @@ const commentsObserver = new MutationObserver(function (mutations, observer) {
     })
   })
 })
-const observer = new MutationObserver(function (mutations, observer) {
+const observer = new MutationObserver((mutations, observer) => {
   mutations.forEach(mutation => {
     // 此时mutation就是一个MutationRecord对象
     mutation.addedNodes.forEach(node => {
@@ -45,9 +45,9 @@ const observer = new MutationObserver(function (mutations, observer) {
   })
 })
 const el = document.querySelector('#page-manager')
-let options = {
+const options = {
   childList: true,
-  attributes: true,
+  // attributes: true,
 }
 if (el) {
   observer.observe(el, options)
