@@ -6,6 +6,7 @@ import repacle from 'rollup-plugin-replace'
 import banner from './meta/meta.ts'
 import bannerDev from './meta/meta.dev.ts'
 import cleanup from 'rollup-plugin-cleanup'
+import babel from '@rollup/plugin-babel'
 
 const isDev = () => process.env.NODE_ENV === 'development'
 
@@ -22,7 +23,6 @@ export default {
     banner: isDev() ? bannerDev : banner,
     // sourcemap: true,
   },
-
   plugins: [
     ts(),
     repacle({
@@ -32,5 +32,6 @@ export default {
     cleanup({
       extensions: ['js', 'jsx', 'mjs', 'ts'],
     }),
+    babel({ babelHelpers: 'bundled', exclude: 'node_modules/**', extensions: ['.js', '.ts'] }),
   ],
 }
