@@ -2,15 +2,19 @@ import apis from '../tranlate'
 
 class TranslateBtn {
   private btn: HTMLDivElement // 翻译按钮实例
-  private contentElement?: HTMLSpanElement // 包裹翻译内容的span元素
-  private sourceText: string // 备份原内容
+  private customContentElement?: HTMLSpanElement // 自定义包裹翻译内容的span元素
+  private source: {
+    sourceText: string
+    nodeTexts: string[]
+  } // 备份原文本内容
   private translatedText: string // 备份翻译内容
-  private isPlainText: boolean // 标记是否为纯文本
   private isTranslated: boolean //标记是否已经被翻译
   constructor() {
-    this.sourceText = ''
+    this.source = {
+      sourceText: '',
+      nodeTexts: [],
+    }
     this.translatedText = ''
-    this.isPlainText = true
     this.isTranslated = false
     this.btn = this._createBtn()
     this._addClickListener(this.btn)
@@ -48,47 +52,98 @@ class TranslateBtn {
     // 记录翻译状态
     this.isTranslated = isTranslated
     if (isTranslated) {
-      if (this.isPlainText) {
-        // 纯文本模式处理方式
-        contentTextElement.textContent = this.translatedText
-      } else {
-        // 非纯文本模式处理方式
-        // 隐藏所有子元素
-        contentTextElement.childNodes.forEach(node => {
-          if (node instanceof HTMLElement) {
-            node.style.visibility = 'hidden'
-            node.style.position = 'absolute'
+      // 填充翻译内容
+
+      // 隐藏所有子元素
+      contentTextElement.childNodes.forEach(node => {
+        const name = node.nodeName
+        switch (name) {
+          case '#text': {
+            node.nodeValue = ''
+            break
           }
-        })
-        // 增加翻译内容元素
-        if (!this.contentElement) {
-          this.contentElement = document.createElement('span')
-          this.contentElement.className = 'style-scope yt-formatted-string'
-          this.contentElement.textContent = this.translatedText
+          case 'SPAN':
+          case 'IMG': {
+            ;(node as HTMLElement).style.visibility = 'hidden'
+            ;(node as HTMLElement).style.position = 'absolute'
+            break
+          }
         }
-        contentTextElement.appendChild(this.contentElement)
+      })
+      // 增加翻译内容元素
+      if (!this.customContentElement) {
+        this.customContentElement = document.createElement('span')
+        this.customContentElement.className = 'style-scope yt-formatted-string'
+        this.customContentElement.textContent = this.translatedText
       }
+      contentTextElement.appendChild(this.customContentElement)
       // 更改按钮名称
       this._changeBtnName(this.btn, '原文')
     } else {
-      if (this.isPlainText) {
-        contentTextElement.textContent = this.sourceText
-      } else {
-        // 移除翻译内容元素
-        if (this.contentElement) {
-          contentTextElement.removeChild(this.contentElement)
-        }
-        // 显示所有子元素
-        contentTextElement.childNodes.forEach(node => {
-          if (node instanceof HTMLElement) {
-            node.style.removeProperty('visibility')
-            node.style.removeProperty('position')
-          }
-        })
+      // 还原翻译内容
+
+      // 移除翻译内容元素
+      if (this.customContentElement) {
+        contentTextElement.removeChild(this.customContentElement)
       }
+      // 显示所有子元素
+      contentTextElement.childNodes.forEach(node => {
+        let i = 0
+        const name = node.nodeName
+        switch (name) {
+          case '#text': {
+            node.nodeValue = this.source.nodeTexts[i++]
+            break
+          }
+          case 'SPAN':
+          case 'IMG': {
+            ;(node as HTMLElement).style.removeProperty('visibility')
+            ;(node as HTMLElement).style.removeProperty('position')
+            break
+          }
+        }
+      })
       // 更改按钮名称
       this._changeBtnName(this.btn, '翻译')
     }
+  }
+
+  /**
+   * 从内容元素中获取原文本
+   * 记录#text还原信息
+   */
+  private _recordSourceText(contentTextElement: Element) {
+    let s: string = ''
+    contentTextElement.childNodes.forEach(node => {
+      const name = node.nodeName
+      switch (name) {
+        case '#text': {
+          const value = node.nodeValue
+          if (value) {
+            s += value
+            this.source.nodeTexts.push(value)
+          }
+          break
+        }
+        case 'SPAN': {
+          const text = node.textContent
+          if (text) {
+            s += text
+          }
+          break
+        }
+        case 'IMG': {
+          const img = (node as Element).getAttribute('alt')
+          if (img) {
+            s += img
+          }
+          break
+        }
+        default: {
+        }
+      }
+    })
+    this.source.sourceText = s
   }
 
   /**
@@ -96,10 +151,6 @@ class TranslateBtn {
    * @param contentTextElement 内容所在元素
    */
   private _update(contentTextElement: Element) {
-    // 记录原文本
-    if (!this.sourceText) {
-      this.sourceText = contentTextElement.textContent || ''
-    }
     // 使用备份
     if (this.translatedText) {
       this._changeState(true, contentTextElement)
@@ -108,7 +159,7 @@ class TranslateBtn {
     // 查询翻译结果并渲染
     const googleApi = apis.google
     const query = {
-      text: this.sourceText,
+      text: this.source.sourceText,
       to: googleApi.language['中文(简体)'],
     }
     googleApi.api.translate(query).then(rawResult => {
@@ -133,20 +184,6 @@ class TranslateBtn {
     this._changeState(false, contentTextElement)
   }
 
-  /**
-   * 检查内容是否为纯文本
-   * @param contentTextElement 内容所在元素
-   * @returns isPlainText: boolean
-   */
-  private _isPlainText(contentTextElement: Element): boolean {
-    const childNodes = contentTextElement.childNodes
-    if (childNodes.length > 1) {
-      for (let node of childNodes) {
-        if (node.nodeName != '#text') return false
-      }
-    }
-    return true
-  }
   private _addClickListener(btn: HTMLDivElement) {
     btn.addEventListener('click', (event: MouseEvent) => {
       const mainElement = this._findParentById(event.target as HTMLDivElement, 'main')
@@ -159,8 +196,10 @@ class TranslateBtn {
         console.error('找不到#content-text元素')
         return
       }
-      // 标记是否为纯文本内容
-      this.isPlainText = this._isPlainText(contentTextElement)
+      // 记录原文本
+      if (!this.source.sourceText) {
+        this._recordSourceText(contentTextElement)
+      }
       // 判断是否已经翻译过 已翻译：还原 | 未翻译：翻译
       if (this.isTranslated) {
         this._rollback(contentTextElement)

@@ -32,6 +32,11 @@ export default {
     cleanup({
       extensions: ['js', 'jsx', 'mjs', 'ts'],
     }),
-    babel({ babelHelpers: 'bundled', exclude: 'node_modules/**', extensions: ['.js', '.ts'] }),
+    !isDev() &&
+      babel({
+        babelHelpers: 'bundled',
+        exclude: 'node_modules/**',
+        extensions: ['.js', '.ts'],
+      }),
   ],
 }
