@@ -1,3 +1,4 @@
+import apis from './tranlate'
 import TranslateBtn from './ui/traslateBtn'
 
 // 监听Node变化，发生变化后 添加新的按钮
@@ -11,7 +12,7 @@ const contentsObserver = new MutationObserver((mutations, observer) => {
           // 如果已添加按钮，节点变化时不再重复添加
           btn = toolbar.querySelector('div[name="translate_btn"]')
           if (!btn) {
-            btn = new TranslateBtn().getBtn()
+            btn = new TranslateBtn([btnTranslateName, btnOriginalName], lang || 'zh-Hans-CN').getBtn()
             toolbar.appendChild(btn)
           }
         }
@@ -50,6 +51,29 @@ const observer = new MutationObserver((mutations, observer) => {
     })
   })
 })
+
+let btnTranslateName = '翻译'
+let btnOriginalName = '原文'
+const requestButtonName = (lang: string) => {
+  const googleApi = apis.google
+    const query = {
+    text: btnTranslateName + '\n' + btnOriginalName,
+    to: googleApi.language(lang)
+  }
+  googleApi.api.translate(query).then(raw => {
+    const r = googleApi.api.transform(query, raw)
+    if (r.result) {
+      [btnTranslateName, btnOriginalName] = r.result
+    }
+  })
+}
+
+// 检查语言
+const lang = document.documentElement.getAttribute('lang')
+if (lang) {
+  requestButtonName(lang)
+}
+
 const el = document.querySelector('#page-manager')
 const options = {
   childList: true,
@@ -60,3 +84,28 @@ if (el) {
 } else {
   console.error('启动失败，请尝试刷新网页重试')
 }
+
+
+
+
+
+
+// const map = new Map<string, string>()
+// const googleApi = apis.google
+
+// for (let i = 0; i < langs.length; i++) {
+//   const l = langs[i]
+//   const query = {
+//     text: l,
+//     to: googleApi.language['中文(简体)'],
+//   }
+//   const raw = await googleApi.api.translate(query)
+//   const r = googleApi.api.transform(query, raw)
+//   if (r.result) {
+//     console.log(l + ':' + r.result[0])
+//     map.set(l, r.result[0])
+//   }
+//   await sleep(5000)
+// }
+
+

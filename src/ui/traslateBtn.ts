@@ -1,7 +1,12 @@
 import apis from '../tranlate'
 
+type BtnNames = [string, string]
+
 class TranslateBtn {
+  private lang: string // 语言类型
   private btn: HTMLDivElement // 翻译按钮实例
+  private btnTranslateName: string // 多语言`翻译`名
+  private btnOriginalName: string // 多语言`原文`名
   private customContentElement?: HTMLSpanElement // 自定义包裹翻译内容的span元素
   private source: {
     sourceText: string
@@ -9,7 +14,10 @@ class TranslateBtn {
   } // 备份原文本内容
   private translatedText: string // 备份翻译内容
   private isTranslated: boolean //标记是否已经被翻译
-  constructor() {
+  constructor(btnNames: BtnNames, lang: string) {
+    this.lang = lang
+    this.btnTranslateName = btnNames[0]
+    this.btnOriginalName = btnNames[1]
     this.source = {
       sourceText: '',
       nodeTexts: [],
@@ -28,7 +36,7 @@ class TranslateBtn {
     const div = document.createElement('div')
     div.setAttribute('name', 'translate_btn')
     const button = document.createElement('button')
-    button.textContent = '翻译'
+    button.textContent = this.btnTranslateName
     button.className =
       'yt-spec-button-shape-next yt-spec-button-shape-next--text yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-s'
     div.appendChild(button)
@@ -78,7 +86,7 @@ class TranslateBtn {
       }
       contentTextElement.appendChild(this.customContentElement)
       // 更改按钮名称
-      this._changeBtnName(this.btn, '原文')
+      this._changeBtnName(this.btn, this.btnOriginalName)
     } else {
       // 还原翻译内容
 
@@ -104,7 +112,7 @@ class TranslateBtn {
         }
       })
       // 更改按钮名称
-      this._changeBtnName(this.btn, '翻译')
+      this._changeBtnName(this.btn, this.btnTranslateName)
     }
   }
 
@@ -139,8 +147,6 @@ class TranslateBtn {
           }
           break
         }
-        default: {
-        }
       }
     })
     this.source.sourceText = s
@@ -160,7 +166,7 @@ class TranslateBtn {
     const googleApi = apis.google
     const query = {
       text: this.source.sourceText,
-      to: googleApi.language['中文(简体)'],
+      to: googleApi.language(this.lang),
     }
     googleApi.api.translate(query).then(rawResult => {
       const result = googleApi.api.transform(query, rawResult)
