@@ -1,6 +1,12 @@
 # YouTube评论翻译按钮
-## 介绍
+## 介绍 Introduction（multi-language support）
 给YouTube的评论上添加一个翻译按钮，就像这样👇
+
+Add a translation button to YouTube comment, like this👇
+
+It automatically recognizes and translates into your language ❤
+
+This is a demo for HongKong users
 
 ![介绍](https://user-images.githubusercontent.com/40789514/205851221-315e5e94-149f-4ae0-bd96-4a4562fb7a1f.gif)
 ## 安装地址

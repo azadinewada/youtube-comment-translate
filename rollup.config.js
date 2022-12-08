@@ -18,11 +18,11 @@ const __dirname = path.dirname(__filename)
 
 const getBanner = () => {
   if (isDev()) {
-    return bannerDev
+    return bannerDev()
   } else if (isPreRelease()) {
-    return bannerPreRelease
+    return bannerPreRelease()
   } else {
-    return bannerProd
+    return bannerProd()
   }
 }
 
@@ -31,7 +31,7 @@ export default {
   output: {
     file: path.resolve(__dirname, './dist/youtube-comment-translate' + suffix + '.user.js'),
     format: process.env.FORMAT || 'iife',
-    banner: getBanner()
+    banner: getBanner(),
     // sourcemap: true,
   },
   plugins: [
