@@ -1,11 +1,11 @@
-## 介绍 Introduction（multi-language support）
+## 介绍 Introduction
 在YouTube的评论上添加一个翻译按钮，就像这样👇
 
 Add a translation button to YouTube comments, like this👇
 
 It automatically recognizes and translates into your language ❤
 
-## Preview
+## Preview（multi-language support）
 ### If you are TW:
 <img src="https://user-images.githubusercontent.com/40789514/206716989-7baded64-4b5a-413a-b41a-5e426f2f0313.gif" width="700px">
 

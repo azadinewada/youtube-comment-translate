@@ -11,7 +11,6 @@ class TranslateBtn {
   private btnOriginalName: string // 多语言`原文`名
   private sourceContents: SourceItem[] // 备份原文本内容数组
   private translatedContents: string[] // 备份翻译后的内容数组
-  private translatedText: string // 备份翻译内容
   private isTranslated: boolean //标记是否已经被翻译
   constructor(btnNames: BtnNames, lang: string) {
     this.lang = lang
@@ -19,7 +18,6 @@ class TranslateBtn {
     this.btnOriginalName = btnNames[1]
     this.sourceContents = []
     this.translatedContents = []
-    this.translatedText = ''
     this.isTranslated = false
     this.btn = this._createBtn()
     this._addClickListener(this.btn)

@@ -28,6 +28,7 @@ const common = `
 // @match         *://www.youtube.com/watch*
 // @compatible    chrome
 // @compatible    firefox
+// @compatible    edge
 // @grant         none
 // @source        ${source}
 // @supportURL    ${supportURL}
