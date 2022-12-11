@@ -1,7 +1,7 @@
 const name = 'YouTube评论翻译按钮'
-const version = '3.0.0'
+const version = '3.0.2'
 const namespace = 'https://github.com/linkwanggo'
-const description = '在YouTube的评论上添加一个翻译按钮 (￣y▽,￣)╭ '
+const description = '在YouTube的评论上添加一个翻译按钮'
 const author = 'linkwanggo'
 const copyright = '2022, linkwanggo (https://github.com/linkwanggo)'
 const icon =
@@ -46,6 +46,8 @@ export const bannerDev = () => {
     s += '\n'
     s += `// @name:${n}          ${languageAreaMap[n].name}(Dev)`
   }
+  s += '\n'
+  s += `// @description:            ${description}`
   for (let n in languageAreaMap) {
     s += '\n'
     s += `// @description:${n}          ${languageAreaMap[n].description}`
@@ -61,6 +63,8 @@ export const bannerPreRelease = () => {
     s += '\n'
     s += `// @name:${n}          ${languageAreaMap[n].name}(Pre Release)`
   }
+  s += '\n'
+  s += `// @description:            ${description}`
   for (let n in languageAreaMap) {
     s += '\n'
     s += `// @description:${n}          ${languageAreaMap[n].description}`
@@ -75,6 +79,8 @@ export const bannerProd = () => {
     s += '\n'
     s += `// @name:${n}          ${languageAreaMap[n].name}`
   }
+  s += '\n'
+  s += `// @description:            ${description}`
   for (let n in languageAreaMap) {
     s += '\n'
     s += `// @description:${n}          ${languageAreaMap[n].description}`

@@ -35,7 +35,7 @@ export type TranslateParams = {
   text: string
   source?: string
   from?: string
-  to?: string
+  to: string
 }
 
 export interface Translate {

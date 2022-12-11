@@ -1,6 +1,6 @@
 import apis from '../tranlate'
 
-type BtnNames = [string, string]
+type BtnNames = [btnTranslateName: string, btnOriginalName: string]
 
 type SourceItem = [name: string, value: string]
 

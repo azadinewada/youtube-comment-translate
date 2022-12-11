@@ -7,13 +7,13 @@ It automatically recognizes and translates into your language ❤
 
 ## Preview（multi-language support）
 ### If you are TW:
-<img src="https://user-images.githubusercontent.com/40789514/206716989-7baded64-4b5a-413a-b41a-5e426f2f0313.gif" width="700px">
+<img src="https://user-images.githubusercontent.com/40789514/206884522-2818690d-e64e-4ab1-a782-2eba6ca20c5e.gif" width="700px">
 
 ### If you are JP:
 <img src="https://user-images.githubusercontent.com/40789514/206716135-b2505efc-4a79-4b90-92aa-ccad74862b6f.gif" width="700px">
 
 ### If you are KR:
-<img src="https://user-images.githubusercontent.com/40789514/206718594-feb33a0f-8e5d-4e97-a522-8e214a001b5f.gif" width="700px">
+<img src="https://user-images.githubusercontent.com/40789514/206888305-4f6ae3da-3623-42a3-880c-a5ab7ab60785.gif" width="700px">
 
 
 ## Support Languages
@@ -36,7 +36,6 @@ It automatically recognizes and translates into your language ❤
 |Español (Latinoamérica)|
 |Español (US)|
 |Euskara|
-|Filipino|
 |Français|
 |Français (Canada)|
 |Galego|
