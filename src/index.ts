@@ -1,11 +1,53 @@
-import { getBtnNames, requestButtonNames } from './button'
+import { findParentById, getBtnNames, requestButtonNames } from './button'
 import TranslateBtn from './ui/traslateBtn'
 
-// 监听Node变化，发生变化后 添加新的按钮
-const contentsObserver = new MutationObserver((mutations, observer) => {
+/**
+ * 替换新的Button
+ * @param node 发生变化的#content-text
+ */
+const replaceButton = (node: Node) => {
+  const mainElement = findParentById(node as HTMLElement, 'main')
+  if (mainElement) {
+    const toolbar = mainElement.querySelector('#toolbar')
+    if (toolbar) {
+      let btn = toolbar.querySelector('div[name="translate_btn"]')
+      if (btn) {
+        toolbar.removeChild(btn)
+      }
+      btn = new TranslateBtn(getBtnNames(), lang || 'zh-Hans-CN').getBtn()
+      toolbar.appendChild(btn)
+    }
+  }
+}
+
+/**
+ * 对评论内容进行监听, 将内容更新的元素替换新的按钮
+ */
+const contentTextObserver = new MutationObserver(mutations => {
+  mutations.forEach(mutation => {
+    let parent: ParentNode // 记录parent 只替换一次
+    mutation.addedNodes.forEach(node => {
+      if (node.parentNode) {
+        if (node.parentNode !== parent) {
+          parent = node.parentNode
+          // 更换按钮
+          replaceButton(parent)
+        }
+      }
+    })
+  })
+})
+
+// 监听contents变化，发生变化后 添加新的按钮
+const contentsObserver = new MutationObserver(mutations => {
   mutations.forEach(mutation => {
     mutation.addedNodes.forEach(node => {
       if (node instanceof Element) {
+        const contentText = node.querySelector('#content-text')
+        if (contentText) {
+          // 对评论内容进行监听
+          contentTextObserver.observe(contentText, { childList: true, characterData: true })
+        }
         const toolbar = node.querySelector('#toolbar')
         let btn
         if (toolbar) {
@@ -26,7 +68,7 @@ const contentsObserver = new MutationObserver((mutations, observer) => {
     })
   })
 })
-const commentsObserver = new MutationObserver((mutations, observer) => {
+const commentsObserver = new MutationObserver(mutations => {
   mutations.forEach(mutation => {
     mutation.addedNodes.forEach(node => {
       if (node instanceof Element) {
@@ -38,7 +80,7 @@ const commentsObserver = new MutationObserver((mutations, observer) => {
     })
   })
 })
-const observer = new MutationObserver((mutations, observer) => {
+const observer = new MutationObserver(mutations => {
   mutations.forEach(mutation => {
     // 此时mutation就是一个MutationRecord对象
     mutation.addedNodes.forEach(node => {
@@ -61,7 +103,6 @@ if (lang) {
 const el = document.querySelector('#page-manager')
 const options = {
   childList: true,
-  // attributes: true,
 }
 if (el) {
   observer.observe(el, options)

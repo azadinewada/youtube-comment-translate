@@ -569,3 +569,18 @@ export const requestButtonNames = (lang: string) => {
 export const getBtnNames = (): [btnTranslateName: string, btnOriginalName: string] => {
   return [btnTranslateName, btnOriginalName]
 }
+
+/**
+ * 从当前元素向上找特定id的元素
+ * @param target 当前元素
+ * @param id 元素id
+ * @returns HTMLElement
+ */
+export const findParentById = (target: HTMLElement, id: string): HTMLElement | null => {
+  if (!target) return null
+  if (target.id === id) return target
+  if (target.parentNode) {
+    return findParentById(target.parentNode as HTMLElement, id)
+  }
+  return null
+}

@@ -1,3 +1,4 @@
+import { findParentById } from '../button'
 import apis from '../tranlate'
 
 type BtnNames = [btnTranslateName: string, btnOriginalName: string]
@@ -228,7 +229,7 @@ class TranslateBtn {
 
   private _addClickListener(btn: HTMLDivElement) {
     btn.addEventListener('click', (event: MouseEvent) => {
-      const mainElement = this._findParentById(event.target as HTMLDivElement, 'main')
+      const mainElement = findParentById(event.target as HTMLDivElement, 'main')
       if (!mainElement) {
         console.error('找不到#main元素')
         return
