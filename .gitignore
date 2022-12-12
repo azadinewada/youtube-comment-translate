@@ -5,6 +5,7 @@ target/
 !**/src/test/**/target/
 .env
 todo.md
+test/
 
 ### STS ###
 .apt_generated

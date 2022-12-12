@@ -40,9 +40,10 @@ export default {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
     }),
     resolve({ jsnext: true, preferBuiltins: true, browser: true }),
-    cleanup({
-      extensions: ['js', 'jsx', 'mjs', 'ts'],
-    }),
+    !isDev() &&
+      cleanup({
+        extensions: ['js', 'jsx', 'mjs', 'ts'],
+      }),
     !isDev() &&
       babel({
         babelHelpers: 'bundled',

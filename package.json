@@ -23,7 +23,8 @@
     "build-prod": "cross-env NODE_ENV=produaction FORMAT=iife rollup -c",
     "build-umd": "cross-env NODE_ENV=produaction FORMAT=umd SUFFIX='-umd' rollup -c",
     "build-esm": "cross-env NODE_ENV=produaction FORMAT=esm SUFFIX='-esm' rollup -c",
-    "build-iife": "cross-env NODE_ENV=produaction FORMAT=iife SUFFIX='-iife' rollup -c"
+    "build-iife": "cross-env NODE_ENV=produaction FORMAT=iife SUFFIX='-iife' rollup -c",
+    "build-test": "cross-env NODE_ENV=development FORMAT=esm SUFFIX='-test' rollup -c ./test/rollup.config.js"
   },
   "keywords": [],
   "author": "linkwanggo",

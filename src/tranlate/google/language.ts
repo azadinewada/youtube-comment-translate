@@ -4,14 +4,11 @@ import { isValidKey } from "../../utils/utils"
 const whiteMapping = {
   'zh-Hans-CN': 'zh-CN',
   'zh-Hant-TW': 'zh-TW',
-  'zh-Hant-HK': 'zh-CN',
+  'zh-Hant-HK': 'zh-TW',
+  'fil-PH': 'tl',
 }
 
-const notSupport = [
-  'fil'
-]
-
-const googleSupport = [
+export const googleSupport = [
   "sq",
   "ar",
   "am",
@@ -157,5 +154,5 @@ export const getGoogleLanguageSupport = (lang: string): string => {
     return l
   }
   console.error('不支持当前语言：'+ lang +'，使用默认语言：zh-CN')
-  return 'zh-Hans-CN'
+  return 'zh-CN'
 }

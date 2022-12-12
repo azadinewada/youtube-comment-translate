@@ -1,4 +1,4 @@
-import apis from './tranlate'
+import { getBtnNames, requestButtonNames } from './button'
 import TranslateBtn from './ui/traslateBtn'
 
 // 监听Node变化，发生变化后 添加新的按钮
@@ -12,10 +12,7 @@ const contentsObserver = new MutationObserver((mutations, observer) => {
           // 如果已添加按钮，节点变化时不再重复添加
           btn = toolbar.querySelector('div[name="translate_btn"]')
           if (!btn) {
-            btn = new TranslateBtn(
-              [btnTranslateName, btnOriginalName],
-              lang || 'zh-Hans-CN'
-            ).getBtn()
+            btn = new TranslateBtn(getBtnNames(), lang || 'zh-Hans-CN').getBtn()
             toolbar.appendChild(btn)
           }
         }
@@ -55,26 +52,10 @@ const observer = new MutationObserver((mutations, observer) => {
   })
 })
 
-let btnTranslateName = '翻译'
-let btnOriginalName = '原文'
-const requestButtonName = (lang: string) => {
-  const googleApi = apis.google
-  const query = {
-    text: btnTranslateName + '\n' + btnOriginalName,
-    to: googleApi.language(lang),
-  }
-  googleApi.api.translate(query).then(raw => {
-    const r = googleApi.api.transform(query, raw)
-    if (r.result) {
-      ;[btnTranslateName, btnOriginalName] = r.result
-    }
-  })
-}
-
 // 检查语言
 const lang = document.documentElement.getAttribute('lang')
 if (lang) {
-  requestButtonName(lang)
+  requestButtonNames(lang)
 }
 
 const el = document.querySelector('#page-manager')
