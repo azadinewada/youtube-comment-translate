@@ -1,5 +1,5 @@
 const name = 'YouTube评论翻译按钮'
-const version = '3.2.0'
+const version = '3.2.1'
 const namespace = 'https://github.com/linkwanggo'
 const description = '在YouTube的评论上添加一个翻译按钮'
 const author = 'linkwanggo'

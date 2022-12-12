@@ -52,7 +52,9 @@ export default {
       }),
     !isDev() &&
       terser({
+        mangle: false,
         format: {
+          beautify: true,
           comments: 'all',
         },
       }),

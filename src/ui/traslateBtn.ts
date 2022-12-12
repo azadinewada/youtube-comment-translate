@@ -43,15 +43,6 @@ class TranslateBtn {
     if (btn.firstChild) btn.firstChild.textContent = name
   }
 
-  private _findParentById(target: HTMLDivElement, id: string): HTMLDivElement | null {
-    if (!target) return null
-    if (target.id === id) return target
-    if (target.parentNode) {
-      return this._findParentById(target.parentNode as HTMLDivElement, id)
-    }
-    return null
-  }
-
   private _changeState(isTranslated: boolean, contentTextElement: Element) {
     // 记录翻译状态
     this.isTranslated = isTranslated
